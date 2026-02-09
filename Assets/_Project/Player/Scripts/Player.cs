@@ -1,30 +1,26 @@
 using UnityEngine;
-using System.Collections;
 
 public class Player : Character
 {
-    public HitPoints hitPoints;
     public HealthBar healthBarPrefab;
     [SerializeField] HealthBar healthBar;
     public void Start()
     {
-        hitPoints.value = startingHitPoints;
+        hitPoints = maxHitPoints;
         healthBar = Instantiate(healthBarPrefab);
         healthBar.character = this;
     }
-    public override IEnumerator DamageCharacter(int damage)
+    public override void TakeDamage(int damage)
     {
-        hitPoints.value -= damage;
+        hitPoints -= damage;
         healthBar.OnHurt(hitPoints, shield);
-        // Play Hurt animation and grant 1 second of invulnerability (ignore enemy collisions)
         var pm = GetComponent<PlayerMovement>();
         if (pm != null)
         {
             pm.StartCoroutine(pm.HurtRoutine(0.33f));
             pm.StartCoroutine(pm.StunRoutine(0.53f));
         }
-        if (hitPoints.value <= 0) KillCharacter();
-        yield return null;
+        if (hitPoints <= 0) KillCharacter();
     }
     public override void KillCharacter()
     {
@@ -35,10 +31,6 @@ public class Player : Character
     {
         healthBar = Instantiate(healthBarPrefab);
         healthBar.character = this;
-        hitPoints.value = startingHitPoints;
+        hitPoints = maxHitPoints;
     }
-    /*private void OnEnable()
-    {
-        ResetCharacter();
-    }*/
 }

@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour
     {
         maxHitPoints = character.maxHitPoints;
         shield = character.shield;
-        hitPoints = character.hitPoints.value;
+        hitPoints = character.hitPoints;
         for(int i=0; i<maxHitPoints+shield; i++){
             Heart newHeart = Instantiate(heartPrefab, HeartFolder);
             newHeart.gameObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(i * space, 0);
@@ -42,10 +42,10 @@ public class HealthBar : MonoBehaviour
             emptyHearts.Add(newEmptyHeart);
         }
     }
-    public void OnHurt(HitPoints curHitPoints, int curShield){ //5+3 -> 5+2
-        if(curHitPoints.value<0) curHitPoints.value = 0;
+    public void OnHurt(int curHitPoints, int curShield){ //5+3 -> 5+2
+        if(curHitPoints<0) curHitPoints = 0;
         if(curShield<0) curShield = 0;
-        for(int i=hitPoints; i>curHitPoints.value; i--){
+        for(int i=hitPoints; i>curHitPoints; i--){
             hearts[i-1].heartType = Heart.HeartType.Empty;
             hearts[i-1].gameObject.GetComponent<Image>().color = new Color(1,1,1,0f);
         }
@@ -53,11 +53,11 @@ public class HealthBar : MonoBehaviour
             hearts[i-1].heartType = Heart.HeartType.Empty;
             hearts[i-1].gameObject.GetComponent<Image>().color = new Color(1,1,1,0f);
         }
-        hitPoints = curHitPoints.value;
+        hitPoints = curHitPoints;
         shield = curShield;
     }
-    public void OnHeal(HitPoints curHitPoints, int curShield){ //4 -> 5
-        for(int i=hitPoints; i<curHitPoints.value; i++){
+    public void OnHeal(int curHitPoints, int curShield){ //4 -> 5
+        for(int i=hitPoints; i<curHitPoints; i++){
             hearts[i-1].heartType = Heart.HeartType.Filled;
             hearts[i-1].gameObject.GetComponent<Image>().color = new Color(1,1,1,1f);
         }
@@ -65,7 +65,7 @@ public class HealthBar : MonoBehaviour
             hearts[i-1].heartType = Heart.HeartType.Filled;
             hearts[i-1].gameObject.GetComponent<Image>().color = new Color(1,1,1,1f);
         }
-        hitPoints = curHitPoints.value;
+        hitPoints = curHitPoints;
         shield = curShield;
     }
 }
