@@ -198,6 +198,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         currentAttackCooldown -= Time.deltaTime;
         if (currentAttackCooldown < 0) currentAttackCooldown = 0;
         // update attack sequence timer (reset sequence after inactivity)

@@ -13,4 +13,4 @@ Hollow Knight is one of my favorite game so I decided to copy practice it
 ## 게임설명(Description)
 ## 게임 플레이 방식(How To Play)
 
-나중에쓸거임시발ㅇ
+나중에쓰겠습니다.

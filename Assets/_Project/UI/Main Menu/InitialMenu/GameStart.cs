@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStart : Menu
 {
     public override void OnTouch()
     {
-        //GameManager.Instance.StartGame();
+        SceneManager.LoadScene("InGame");
     }
 }
